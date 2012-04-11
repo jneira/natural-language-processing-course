@@ -1,0 +1,88 @@
+* Regular expressions
+  - A formal language for specifying text strings
+  - Elements:
+    - disjunction:  between square brackets 
+    - ranges: A-Z,a-z,0-9 
+    - negation: carat as first char in []
+    - more disjunctions: |
+    - quantifiers ?,*,+,.
+    - ...
+   - Process by approximation. Errors:
+     - False positives: match strings that we should not have matched
+     - False negatives: not matching things that we should have
+       matched
+   - Correction:
+     - Increase accuracy or precision (- false positives)
+     - Increase coverage or recall (minimizing false negatives)
+   - Uses:
+     - First model for any test proccesing
+     - Features in classifiers
+     - Capturing geneeralizations
+
+* Regular expressions in practical NLP
+  - Match natural language patterns.
+  - Tokenizers/lexors
+  - "A token is a string of characters, categorized according to the
+    rules as a symbol (e.g., IDENTIFIER, NUMBER, COMMA). The process
+    of forming tokens from an input stream of characters is called
+    tokenization, and the lexer categorizes them according to a symbol
+    type."
+
+* Word tokenization
+  - Text normalization:
+    1.- Segmenting/tokenizing words in running text
+    2.- Normalizing word formats
+    3.- Segmenting sentences
+  - Counting words
+    - Fragments, filled pauses
+    - Word definition:
+      - Lemma: same stem, same rough sense 
+      - Wordform: representation
+    - Type: an element of the vocabulary
+    - Token: an instance of that type in running text
+    - N = number of tokens
+    - V = vocabulary = set of types
+    - |V| = size of vocabulary
+    - Corpora: datasets of text
+    - |V| > O(N^1/2)
+  - Command line:
+    - less: text visualization
+    - tr: substitute words
+    - sort: words
+    - uniq: eliminate duplicates
+    - grep
+  - Issues: ',-,San Francisco,m.p.h.
+    - Each language has particular issues
+* Word normalization and stemming
+  - Need for normalize similar words: f.e. u.s.a. and usa
+  - Implicit class conversion or asymmetric expansion 
+  - Case folding: 
+    - reduce all words to lower case (with exceptions)
+    - for sentiment analysis case is helpful
+  - Lemmatization:
+    - Reduce inflections or variant forms to base form (am,are,is->be)
+  - Morphology:
+    - Morphemes: The small meaningful units that make up words
+    - Stems: the core meaning-bearing units
+    - Affixes: bits that adhere to stems (grammatical function)
+  - Stemming: reduce terms to their stems. A limited form of
+    lemmatizacion
+    - Most common algorithm: Porter's algorithm
+    - A iterated series of reaplce rules
+* Sentence segmentation
+  - !,? are unambigous
+  - . is ambigous:
+    - sentence boundary
+    - abbreviations
+    - numbers .02%
+  - Binary classifiers: for al . decide if is EOF or not
+  - Decision trees
+    - Choosing the features
+    - Usually learned by machine learning from a training corpus
+
+n	 4				
+o	 3				
+e	 2	 3	 2	 1	
+p	 1	 2	 1	 2	
+-	 0	 1	 2	 3	 4
+/	 -	 o	 p	 e	 n

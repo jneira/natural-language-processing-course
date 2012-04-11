@@ -1,0 +1,79 @@
+* The spelling correction task
+  - Spelling error detection
+  - Spelling error correction:
+    - Autocorrect:
+      - hte->tge
+    - Suggest a correction
+    - Suggestion lists
+  - Types of spelling errors:
+    - Non-word errors:
+      - graffe -> giraffe
+    - Real-word errors
+      - Typographical errors
+      - Cognitive errors (homophones)
+* Noisy channel model of spelling
+  - Intuition
+  - original word -noisy channel-> noisy word
+  - noisy word -decoder(hypothesis)-> guessed words
+  - probabilistic model
+  - analysis:
+    - Observe x of a misspelled word
+    - Find the correct word w: the best word that maximizes a
+      probability:
+      - w^=maximize P(x|w)P(w)
+      - maximize the product of likelihood and the prior
+      - P(x|w)-> the channel o error model
+      - P(w)-> language model
+    - Example:
+      - acress
+      - 1.- Generating candidates:
+        - Similar spelling. Small edit dist to error:
+          - Insertion, deletion, substitution and
+          - Transposition of 2 adjacent lettrs
+          - Damerau-Levenshtein distance
+        - Similar pronunciation
+      - 2.- Language model
+        - uni/bi/tri-grams
+        - candidates have diff prob in lang model
+          (across>actress>cress)
+      - 3.- Channel model prob -> edit prob
+        - P(X|W)=probability of the edit
+          - del/ins/subst/trans
+          - confusion matrix: probability of typin errors for each
+            letter
+            - f.e. how often xy is typed as x
+          - P(x|w)= del[w[i-1],w[i]]/count[w[i-1]w[i] and so on
+
+* Real-Wrod Spelling Correction
+  - 25-40% of spelling errors are real words (some of them frequent)
+  - For each word generate candidate set:
+    - the world itself
+    - all single-letter edits that are english words
+    - words homophones
+  - Choose best candidates:
+    - Noisy channel model
+    - Task specific clasiffier
+  - Simplification: One error per setence
+  - Choose the sequence that maximizes P(w)
+  - Probabilities:
+    - Language model:
+      - Unigram
+      - Bigram
+    - Channel model
+      - Same as for non-word spelling correction
+      - Plus need probability for no error P(w|w)
+
+* State of the Art Systems
+  - HCI issues in spelling
+  - autocorrect > only the best correction > correction list > flag as
+    error
+  - Noisy channel:
+    - Independence assumptions no real
+    - Weight probabilities:
+      - w=argmax P(x|w)P(w)^λ
+    - Learn λ from a dev test
+  - Phonetic error model
+    - Metaphone (GNU aspell)
+  - Other features
+
+

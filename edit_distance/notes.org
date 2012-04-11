@@ -1,0 +1,97 @@
+* Defining Minimum Edit Distance
+  - "How similar are two strings"
+  - Useful for different problems
+  - Is the minimum number of editing (insertion,deletion,substitution)
+    operations to transform one into another
+  - If substitutions costs 2 is called levenshtein distance
+  - Uses: 
+    - evaluate machine translation and speech recognition
+    - named entity extraction and entity coreference
+  - Describing algorithm:
+    - Searching for a path from the start string to final string
+    - Initial state
+    - Operators
+    - Goal state
+    - Path cost
+  - For two strings:
+    - X of length n
+    - Y of length m
+  - We define D(i,j)
+    - The edit distance beetween X[1..i] and Y[1..j]
+      - the first i chars of x and the first j chars of Y
+    - The edit distance between X and Y is D(n,m)
+* Computing Minimum Edit Distance
+  - Dynamic programming: 
+    - Solving problems combining solutions to subproblems
+    - Bottom-up:
+      - D(i,j) for small i,j
+    - D(i,0)=i
+      D(0,j)=j
+      for each i=1..M
+      for each j=1..N
+      D(i,j) = min D(i-1,j)+1
+                   D(i,j+i)+1
+                   D(i-1,j-1) + 2 if S1(i)<>S2(j)
+                                0 if S1(i)=S2(j)
+      D(n,m) is distance
+* Backtrace for Computing Alignments
+  - Alignment between two strins: which char in string 1 correspond to
+    which char in string 2
+  - Keeping a backtrace, remembering in each cell the way to reach it
+  - Save the previous cell(s) of each one 
+  - ptr(i,j)= LEFT
+              DOWN
+              DIAG
+  - Time: O(nm)
+  - Space: O(nm)
+  - Backtrace O(n+m)
+* Weighted Minimum Edit Distance
+  - If some letters or operation are more likely than others
+  - Add a special cost function 
+* Minimum Edit Distance in Computational Biology
+  - Align adn strings using computing distances
+  - Comparing genes from diff species
+  - Assembling fragments to sequence ADN
+  - Comparing individuals to detect mutations
+  - NLP: distance(minimized) and weights
+  - Computational Biology: similarity and scores
+  - The Needleman-Wunsch algorithm
+  - D(i,0)=-i*d
+    D(0,j)=-j*d
+    for each i=1..M
+    for each j=1..N
+    D(i,j) = min D(i-1,j)-d
+                 D(i,j+i)-d
+                 D(i-1,j-1) + s[x(i),y(j)]
+    D(n,m) is distance
+  - Overlapping, ignore before and after gaps
+  - Overlap detection variant:
+    - 1.- Inicialization
+      for all i,j
+        F(i,0)=0
+        F(0,j)=0
+    - 2.- Termination
+        FOPT= max
+                maxi F(i,N)
+                maxj F(M,j)
+  - Local Alignment problem:
+    - Two strings x=x1...xm
+                  y=y1...yn
+    - Find substrings x',y' whose similarity (optimal global alignment
+      value) is maximum
+    - Smith-Waterman
+    - Initialization:
+      F(0,j)=0
+      F(i,0)=0
+    - Iteration F(i,j) = max 
+                         0
+                         F(i-1,j)-d
+                         F(i,j-1)-d
+                         F(i-1,j-1)+s(xi,yi)
+    - let ourselves to start all over again from zero if very negative
+      score
+    - Termination:
+      1. best local alignment: Fopt=maxij F(i,j) Find Fopt and trace
+         back
+      2. If we want all local alignemnts scoring>t
+         For all i,j find F(i,j)>t an trace back

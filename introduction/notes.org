@@ -1,0 +1,43 @@
+* Introduction
+  - Applications:
+    - Question anwering (like IBM Watson)
+    - Information extracting
+    - Sentiment analysis
+    - Machine translation:
+      - full or as human translator helper
+  - Subspecialsties:
+    - Mostly solved
+      - Spam detection
+      - Part-of-speech (POS) tagging
+      - Named entity recognition (NER)
+    - Making good progress
+      - Sentiment analysis
+      - Coreference resolution 
+      - Word sense disambiguation (WSD)
+      - Machine translation (MT)
+      - Information extraction
+    - Still really hard
+      - Question answering
+      - Paraphrase detection
+      - Summarization
+      - Dialog
+  - The most important diffciulty is ambiguity. Another ones:
+    - Non-standar English
+    - Segmentation issues
+    - Idioms
+    - Neologisms
+    - World knowledge
+    - Tricky entity names
+  - Tools:
+    - Knowledge about language
+    - Knowledge about the world
+    - A way to combine knowledge sources
+  - Theory and methods for statistical nlp:
+    - Viterbi
+    - Naive Bayes, Maxent classifiers
+    - N-gram language modeling
+    - Statistical parsing
+    - Inverted index, tf-idf, vector models of meaning
+  - Practical applications:
+    - Information extraction
+    - Spelling correction

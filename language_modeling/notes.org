@@ -1,0 +1,191 @@
+* Introduction to N-grams
+  - Probabilistic language models: 
+    - Assign a probability to a sentence
+  - Relativily closed to the correct setence
+    - Machine translation
+    - Spell correction
+    - Speech recognition
+    - More
+  - Probability of a sequence of words: 
+    - P(W)=P(w1,w2,...wn)
+  - Probability of a incoming word
+    - P(w5|w1,w2,w3,w4)
+  - A model that computer either of those:
+    - language model (the grammar)
+  - Reminder: the chain rule
+    - P(A|B)=P(A,B)/P(B) >>>
+    - P(A|B) P(B)=P(A,B)
+  - More vars:
+    - P(A,B,C,D)=P(A)P(B|A)P(C|A,B)P(D|A,B,C)
+  - P("its water is so transparent")=
+    P(its) x P(water|its) x P(is|its water) x
+    P(so|its water is) x P(transparent | its water is so)
+  - P(w1 w2 ... wn)=∏ P(wi|w1 w2 ... wi-1)
+  - Markov assumption (simplifyng)
+    - P(the|its water is so transparent that) ~= P(the|that)
+      ~= P(the|transparent that)
+    - P(w1 w2 ... wn)=∏ P(wi|wi-k w2 ... wi-1)
+  - Simplest case: unigram model (probability of last word)
+  - Bigram model (condition on the previous word)
+  - N-gram models:
+    - In general insufficient cause language has long-distance
+      dependencies
+  - Useful to local information
+
+* Estimating N-gram Probabilities
+  - Maximum likelihood:
+    - P(wi|wi-1)=count(wi-1,wi)/count(wi-1)
+  - Bigrams normalized by unigrams
+  - Bigram estimates of sentence probabilities:
+    - Multiply the probs of sentence words 
+  - Analysis:
+    - gramatical facts determine many bigram probs
+    - facts about "world"
+  - Prob in log space:
+    - avoid underflow
+    - add is faster than mult
+    - p1*p2*p3*p4 = logp1+logp2+logp3+logp4
+  - Language modeling tools:
+    - SRILM: http://www.speech.sri.com/projects/srilm
+    - google n-grams: huge datasets
+      http://ngrams.googlelabs.com
+
+* Evaluation and perplexity
+  - Evaluation of language model
+  - Goal: assign higher prob to "real" or "frequently observed"
+    sentences than "ungrammatical" or "rarely observed"
+  - Train params on a training set
+  - Test model performance on a unseen test set
+  - Evaluation metric to evaluate the model
+  - Comparing accuracy in the concrete task
+  - Extrinsic (in-vivo) evaluation:
+    - Time-consuming
+  - Intrinsic evaluation: perplexity
+    - Only useful in pilot experiments
+  - Intuition of perplexity:
+    - predicting next world in a setence
+    - unigram are bad
+  - Perplexity is the probability of the best set, normalized by the
+    number o words
+    - PP(W)=P(w1w2..wn)^-1/n
+    - Chain rule: PP(W)=(∏(i..N)1/P(Wi|W1..Wi-1))^-1/n
+    - Bigrams: PP(W)=(∏(i..N)1/P(Wi|Wi-1))^-1/n
+    - The average branching factor by normalizing for the length
+    - Asking how many things can occur each time waited by their
+      probability
+* Generalization and Zeros
+  - Cases with probability with bigrams or trigams are 0
+  - The Shannon Visualization Method:
+    - Chooses random bigrams to create a sentence
+  - Approximating Shakespeare: from unigrams to quadrigrams
+  - Shakespeare corpus:
+    - N=884647 tokens, V=29066
+    - 300000 bigram types out of V^2=884m possible bigrams
+    - 99.96% of the possible bigrams were never seen
+  - The perils of overfitting:
+    - n-grams only work well if test corpus looks like the training
+      corpus: it often doesnt
+    - Shakespeare vs Wall Street Journal
+  - Generalization using zeros: things htat never occurred in the
+    training set, but do occur in the test set
+  - Zero probability bigrams:
+    - Zero probability to the test set
+    - Can not compute perplexity
+* Smoothing: Add-One
+  - To avoid overfitting
+  - Add one to every 0 probability n-gram
+  - Bad choive for likelihood estimation
+* Interpolation
+  - Between various language model (less context)
+  - Backoff: use trigram->bigram->unigram depending on evidence
+  - Interpolation: Combine various n-grams (uni+bi+tri-grams)
+  - 2 types:
+    - Simple interpolation:
+      P(W[n]|W[n-1]W[n-2])=λ1P(W[n]|W[n-1]W[n-2])+λ2P(W[n]|W[n-1])+
+                           λ3P(Wn)
+      λ1+λ2+λ3=1 to make probability
+    - Lambdas contional on context
+  - How to determine lambdas:
+    - Use a held-out data or dev set: choose λs to maximize the
+      probability:
+      - Fix the N-gram probs (on training data)
+      - Search for λs that give largest prob to held-out set
+  - Unknown words:
+    - OOV words: out of vocabulary
+    - Create a unknown word token <UNK>:
+      - Training of <UNK> probabilities
+      - At text normalization phase: any trining word not in L change
+        to <UNK>
+      - Train its probs like others
+      - At decoding time use UNK probs for words not in training
+  - Huge web-scala n-grams:
+    - Pruning:
+      - Only store n-grams with copunt>threshold
+      - Entropy based pruning
+    - Efficiency
+  - Smoothing for web-scale ngrams:
+    - Stupid back-off:
+      - The count of the words divided by the count of the prefix
+        (maximum liklihood estimation) if first count is not zero
+      - Normal prob multiplied by param
+      - Output is scores and not probs
+  - n-gram smoothing summary:
+    - add-1 (Laplace) smoothing:
+      - OK for text categorization, not for language modeling
+    - most commonly used method
+      - Extended interpolated Kneser-Ney
+    - for very large n-grams:
+      - stupid backoff
+  - Advanced lang models
+    - Discriminative models:
+      - choose n-grams weights to improve a task, no to fis training
+        set
+    - parsing-based models
+    - caching models:
+      - recently udes words are mor elikely to appear
+      - bad perform for speech recognition
+* Good-Turing Smoothing
+  - P[add-k](Wi|Wi-1)=c(Wi-1,Wi)+m(1/V)/c(Wi-1)+m
+  - P[UnigramPrior](Wi|Wi-1)=c(Wi-1,Wi)+mP(Wi)/c(Wi-1)+m
+  - Intuition:
+    - Use the count of things we've seen once
+      - To help estimate the count of things we've never seen
+  - Notation: Nc=Frequency of frequency c
+    - How many things ocurred with frequency C
+    - N1 = how many words occur 1 time
+  - Intuition: 
+    - Let's use our estimate of things-we-saw-once to estimate the new
+      things N1/C
+    - We have to reduce probability of original items
+    - P[*,GT](Things with zero frequency)=N[1]/N
+    - c*(the new count)=(c+1)N[c+1]/N[c]
+    - For large k, too jumpy, zeros wreck estimates
+      - if N[c+1]=0 -> c*=0
+      - Solution: replace empirical Nk with a descending curve that
+        fits empirical Nk
+* Kneser-Ney Smoothing
+  - In Turing smoothing original count and discounted count are
+    closely related (+-0.75)
+  - Absolute discounting interpolation: just substract a constant d 
+  - Instead of 
+    - P(w): "How likely is w"
+    - P[continuation](w)="How likely is w to appear as a novel
+      continuation?
+      - For each word, count the number of bigrams types it completes
+      - Every bigram type was a novel continuation the 1 time it was
+        seen
+  - How many times does w appear as a novel continuation:
+    - P[cont](w) α |{w[i-1]:c(w[i-1],w)>0}|
+  - Normalizaed by the total number o word bigrams types
+    - |{(w[j-1],w[j]):c(w[j-1],w[j])>0}|
+  - aternative metaphor: 
+    - The number of # of word types seen to precede w
+    - normalized by the # of words preceding all words
+  - A frequent world occurring in only one context will have a low
+    conytinuation probability:
+    - P[kn](w[i]|w[i-1])=max(c(w[i-1],w[i])-d,0)/c(w[i-1])+
+                         λ(w[i-1]P[cont](w[i])
+    - λ is a normalizing constant; the probability mass we've
+      discounted:
+      - λ(w[i-1])=d/c(w[i-1])|w:c(w[i-1],w)>0
+

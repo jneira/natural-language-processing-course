@@ -1,0 +1,322 @@
+
+Hi. Chris Manning and I are very happy to
+welcome you to our online class on natural
+language processing. Question answering is
+a very important application for natural
+language processing. You may know that
+IBM's Watson question answering system
+actually won the Jeopardy game last
+February. Watson was asked questions like,
+William Wilkinson's An Account of the
+Principalities, inspired this authors most
+famous novel. And you may know the answer
+as well as Watson did, which is that the
+author was Bram Stoker, who famously wrote
+Dracula. Information extraction is another
+important natural language processing
+application. Let's suppose I get an e-mail
+like this one here from my colleague,
+Chris, scheduling a meeting. We'd like to
+automatically recognize that this gates
+one:59 tomorrow is the location and time
+of the meeting. And so we're going to have
+to do natural language processing to
+figure out that, what day tomorrow is and
+when noon is, and whether we're in the
+morning or the evening; and automatically
+extract enough information to populate the
+calendar like this. Information extraction
+is also useful in analyzing products. So
+imagine that we're looking at online
+reviews of a camera. And from those
+reviews, we'd like to automatically figure
+out that people are interested in certain
+aspects of a camera, the zoom, the
+affordability, the size and weight. And
+then for sentences about these aspects,
+we'd like to automatically decide whether
+they're positive or negative. So nice and
+compact to carry, that's a positive thing
+about the camera. But, flimsy or plastic
+or very light, that seems like a negative
+kind of aspect. While this last one is
+positive again. So, if we could. Analyze
+the sentiment of each of the sentences in
+each of the reviews. We can then aggregate
+these into a general summary of what's
+going on in the reviews. And so we might
+say that this particular camera has
+excellent flash, and pretty good
+affordability, it's reasonably priced, but
+maybe the ease of use here is not so good.
+So summarizing the positive and negative
+sentiment about each aspect of, done, any
+product or service on the web. Machine
+translation is another important natural
+processing application. And that's true,
+for example, for fully automatic
+translation, where we might have a source
+text like this Chinese sentence. And we'd
+like to translate that here, showing
+Stanford's phrasal translator. But also,
+machine translation is important in
+aspects of helping human translators. So
+here's a source text in Arabic, where the
+machine translation system gives some
+impossible suggestions here for the human
+translator to follow the first word,
+Lebanese. Like every other discipline,
+natural language processing is composed of
+a number of subspecialties. In some of
+these areas we've made a lot of progress.
+So for example applications like spam
+detection where we detect from the text of
+an email if it's spam or not are good
+enough to be commercial, so I'll call
+these mostly solved, although obviously
+there's lots of errors in current
+applications, but they're good enough to
+be Included in modern email technology.
+Similarly speech synthesis is, is useful
+enough to be commercial and we've had a
+lot of success with basic tasks, like part
+of speech tagging, which is the task of
+deciding if a word is a noun or a verb or
+an adjective and that's an important
+component technology for parsing, or named
+entity recognition, the task of deciding
+if a word is a person or refers to a
+organization or refers to a location. On
+other tasks, while we haven't solved them,
+we're making good progress. And one of
+them is the task of sentiment analysis,
+that I just mentioned earlier. Deciding if
+a particular string of text or an entire
+document is positive or negative about
+some attribute. And we'll talk about that.
+And, parsing. We'll talk a lot about
+parsing. Parsing is again, a technology
+that works pretty well, although there's
+lots of important recent research on
+improving it. And similarly for machine
+translation. Useful on the web, still lots
+or errors, and ongoing, important research
+area. Other topics are just really hard.
+So question answering, being able to, to
+automatically answer any kind of question.
+We have, algorithms for dealing with
+factoid questions. Simple questions, but,
+in general, this is a very hard problem.
+Paraphrases, deciding that the sentence,
+thirteen soldiers lost their lives. Has a
+similar meaning to the sentence several
+troops were killed, and that's the task of
+paraphrase detection, and that's quite
+hard. Or a summarization, the task of
+noticing that there's been Portuguese
+financial problems, Greek bonds, Italian
+debt, and summarizing all that to realize
+that there's something like a European
+debt crisis. Or complete dialog systems
+that can answer questions and interpret
+complete situations. These are the kinds
+of things that we only have very beginning
+algorithms to deal with. Why is natural
+language processing difficult? The most
+important difficulty is called ambiguity.
+Why is this headline funny? What's the
+source of the ambiguity here? The reason
+this headline is ambiguous has to do with
+the phrase in jail. A normal reader reads
+that phrase, in jail, as if it has to do
+with the wives. So his wives are all in
+jail. So we might represent that with
+little brackets saying that in jail is a
+part of wives. So we have a little tree,
+and we might have eight lives. And then we
+might have, in jail as part of that cold
+piece. But that's the incorrect reading of
+this headline. The writer intended to say
+that who was in jail. Was the minister,
+was the minister that was in jail, rather
+then the wives. So by giving sentences
+that are ambiguous in this way, we can see
+that this kind of ambiguity is pervasive
+not just in this funny headlines but, but
+everywhere else. So for example, in the
+sentence teacher, these are real
+headlines, in the sentence teacher strikes
+idle kids, was intended to mean that the
+verb was idle, that we have teacher
+strikes and the kids are what they idle,
+so the teacher strikes idle the kids. So
+we have, here's a bracketing of the whole
+sentence. So, what, what gets idled? The
+kids. And who does the idling? The
+strikes. But what it sounds like it means,
+and the humor comes from, in completely a
+different interpretation, in which, the
+verb is strikes. Strikes has an argument,
+which is. Idle kids. And it's the teacher
+that does the striking. So, again, we can
+draw the brackets here to show that idle
+kids is acting as a constituent here. And
+that, strikes is a verb that takes idle
+kids as an argument. And we'll talk about
+this kind of grammar and parsing issues
+later. These kinds of ambiguities are very
+common. Not just in amusing headlines but
+I'll show you a few more. So, here we have
+a different kind of ambiguity, the word,
+holds up. Has two meanings in English. It
+means to delay and it means to support and
+of course the writer of the, article meant
+that red tape was delaying a new bridge
+where red tape here doesn't mean physical
+red tape but meant metaphorically
+bureaucracy. So the writer meant
+bureaucracy delays new bridges but in fact
+the, both phrases have, are ambiguous. And
+so we get the humorous reading that strips
+of red-colored tape our supporting bridge.
+And we can see lots of other similar kinds
+of errors. Let's look at a single sentence
+and analyze the ambiguity in more detail.
+So, in this sentence, the correct verb is
+raises. Who does the raising? The Fed. And
+what do they raise? Rates. And how much do
+they raise it? Half a percent. And why do
+they raise it? In an effort to control
+inflation. So, the correct reading. We
+have raising interest rates. Raising,
+interest rates and how much do we raise
+them five % and it's in an effort to
+control inflation that's the correct
+reading. But a possible misinterpretation,
+its very easy for a parser to come across
+accidentally instead of raises being the
+verb, we might imagine that interest is
+the verb. So the fan raises the interests
+somebody or something. What are the
+interests. The interests are rates. So the
+raises are interesting to the rates not
+clear what that would mean but for a
+parser it's hard to rule out this
+interpretation. In fact, it's even
+possible for rates to be the verb. So, the
+Fed raises interest. The interest caused
+by Fed raises, or the interest in Fed
+raises, the Fed raises interest. Rates in
+it, so we might be rates high in a scale,
+or rates low on newsworthiness, or so on.
+And, and here rates one-half a percent of
+something. And, this kind of ambiguity
+extends all the way through the sentence.
+So, for example. This prepositional
+phrase, in effort. Correctly attaches, its
+a fact about their raising, it's a fact
+about the goal of their raising but in
+fact lots of time a preposition phrase
+attaches to the nearest noun so it might
+be that this is half a percent in dollars
+or half a percent in some currency and the
+person has to realize that in effort is
+not related to point of to half a percent
+but it's related to a whole raising event.
+Now, most lectures will include a little
+quiz, and we're gonna have a little quiz
+after this slide in fact. And the goal of
+the quiz is, is just to check basic
+understanding of simple multiple-choice
+quizzes. You can retake them if you get
+them wrong. And the goal should be that if
+you get a quiz wrong, you know you should
+go back and practice, check some of the
+earlier material. Now I've been focusing
+on just linguistic variability and
+ambiguity, but really there are lots of
+other phenomena that make natural language
+processing hard. And in the interest of
+time I won't walk through all of them, but
+here's a couple of them. We have for
+example in Twitter tweets or in SMS texts,
+we have lots of non-standard text. We have
+capitalization and words like so spelled
+with two o's, and you spelled with a u,
+and hash tags, and all sorts of things
+going on that are going to be have to be
+processed if we're analyzing blogs, or if
+we're analyzing Twitter feeds and so on.
+Another important issue is segmentation,
+so here notice the dash here, between New
+York and New Haven. In order to decide
+what's a word, to decide that, that, in
+fact, New York is a word and New Haven is
+a word. They're both words and this dash
+is linking New York and New Haven. We have
+to know that, that dash is not the kind of
+dash that occurs in the phrase, in dash
+law, where it's, it's telling us that
+in-law's really one word. There's no word,
+York dash new. So we'll have to figure
+that out. And segmentation is a problem
+that we'll turn to almost immediately
+after this lecture. And there're problems
+with idioms, where phrases mean different
+things than we might expect from the
+words. And there'll be tricky kinds of
+entity names. So, sometimes a movie name
+is inserted right in the middle of a
+sentence. And this is a very important
+problem in biology, where names of genes
+often have words that look like English
+words, like F-O-R here. And so on. Now if
+the task of natural language processing is
+so difficult, how are we gonna solve it?
+What tools do we need? Well obviously we
+need knowledge about language. We need
+knowledge about the world. And perhaps
+most important, we need a way to combine
+these knowledge sources. And the way we
+generally do this is probabilistic models
+that we build from language data. So we'd
+like to know that the probability of the
+French word maison mapping to the English
+word house is pretty high. But the French
+word avocate general is probably not a
+good match to the English phrase the
+general avocado. So we'd like to learn
+these kind of probabilities and luckily it
+turns out that rough text features can
+often do half the job for us. And we'll
+learn a lot of ways to use simple text
+features. So this class, we'll be teaching
+key theory and methods for statistical and
+natural language processing. And we'll
+learn the [inaudible] algorithm, we'll
+learn classifiers like naive Bayes and
+[inaudible]. We'll talk a lot about end
+gram language modeling. We'll introduce
+statistical parsing. We'll introduce the
+inverted index for information retrieval.
+The TFIDF model, this idea of vector
+models and meaning. And we'll apply these
+kind of methods and algorithms to a number
+of practical robust real world
+applications, like information extraction,
+like spelling correction, and like
+information retrieval, and sentiment
+analysis. The skills you'll need for this
+class are simple linear algebra. You need
+to know about vectors and matrices, basic
+probability theory, and Java and Python
+programming. You'll have weekly
+programming assignments, and you can
+choose between Java and Python. And we've
+given you some suggestions on the website
+for ways to get some of this background if
+you're missing it. We're very happy to
+have you in our natural language
+processing class. Welcome to the class,
+and we look forward to seeing you in
+future lectures.
